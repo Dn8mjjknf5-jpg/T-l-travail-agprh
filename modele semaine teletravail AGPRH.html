@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modèle Semaine Télétravail — AGPRH Assurance</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Epilogue:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu:    #0D2545;
+    --bleu2:   #1A4480;
+    --teal:    #0F7B72;
+    --teal-l:  #E6F4F3;
+    --gold:    #C9920A;
+    --gold-l:  #FDF6E3;
+    --orange:  #C94A1A;
+    --orange-l:#FEF0E8;
+    --gris:    #F0EDE8;
+    --gris2:   #D8D4CE;
+    --blanc:   #FFFFFF;
+    --texte:   #141414;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Epilogue', sans-serif;
+    background: var(--gris);
+    color: var(--texte);
+    min-height: 100vh;
+  }
+
+  /* ══ PAGE WRAPPER ══ */
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+  }
+
+  /* ══ HEADER ══ */
+  .doc-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .doc-header-left .kicker {
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: .4rem;
+  }
+  .doc-header-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    line-height: 1.1;
+    color: var(--bleu);
+  }
+  .doc-header-left h1 em {
+    display: block;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--bleu2);
+    opacity: .7;
+  }
+  .doc-header-right {
+    background: var(--bleu);
+    color: var(--blanc);
+    border-radius: 12px;
+    padding: 1.2rem 1.6rem;
+    font-size: .82rem;
+    line-height: 1.8;
+    min-width: 220px;
+  }
+  .doc-header-right strong { font-size: .95rem; display: block; margin-bottom: .3rem; color: var(--gold); font-family:'Playfair Display',serif; }
+
+  /* ══ SELECTOR ══ */
+  .selector-bar {
+    display: flex;
+    gap: .6rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .selector-bar span {
+    font-size: .78rem;
+    font-weight: 600;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-right: .4rem;
+  }
+  .svc-btn {
+    padding: .5rem 1.1rem;
+    border-radius: 30px;
+    border: 2px solid var(--gris2);
+    background: var(--blanc);
+    font-family: 'Epilogue', sans-serif;
+    font-size: .82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    color: var(--texte);
+  }
+  .svc-btn.active, .svc-btn:hover {
+    background: var(--bleu);
+    border-color: var(--bleu);
+    color: var(--blanc);
+  }
+  .svc-btn.active { box-shadow: 0 4px 14px rgba(13,37,69,.25); }
+
+  /* ══ RÈGLES CHIFFRES ══ */
+  .pills {
+    display: flex;
+    gap: .8rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .pill {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    background: var(--blanc);
+    border-radius: 40px;
+    padding: .5rem 1rem .5rem .6rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    font-size: .78rem;
+    font-weight: 500;
+  }
+  .pill-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    line-height: 1;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blanc);
+    flex-shrink: 0;
+  }
+  .pill-num.teal  { background: var(--teal); }
+  .pill-num.bleu  { background: var(--bleu); }
+  .pill-num.gold  { background: var(--gold); }
+  .pill-num.orange{ background: var(--orange); }
+  .pill-label { line-height: 1.35; max-width: 140px; color: #555; }
+
+  /* ══ PLANNING HEBDO ══ */
+  .planning-section { margin-bottom: 2.5rem; }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--bleu);
+    margin-bottom: 1rem;
+    padding-left: .4rem;
+    border-left: 3px solid var(--teal);
+    padding-left: .75rem;
+  }
+
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: .75rem;
+  }
+
+  /* ══ CARTE JOUR ══ */
+  .day-card {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    transition: transform .2s, box-shadow .2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .day-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,.13); }
+
+  .day-card-header {
+    padding: .75rem 1rem .6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .day-card-header .day-name {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    opacity: .75;
+  }
+  .day-card-header .day-icon { font-size: 1.3rem; }
+
+  .day-card-body {
+    flex: 1;
+    padding: .8rem 1rem 1rem;
+    background: var(--blanc);
+  }
+  .day-card-body .status-badge {
+    display: inline-block;
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    padding: .25rem .65rem;
+    border-radius: 20px;
+    margin-bottom: .7rem;
+  }
+  .day-card-body .activities {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+  .day-card-body .activities li {
+    font-size: .75rem;
+    color: #555;
+    line-height: 1.4;
+    display: flex;
+    gap: .4rem;
+    align-items: flex-start;
+  }
+  .day-card-body .activities li::before {
+    content: '—';
+    flex-shrink: 0;
+    opacity: .4;
+    font-size: .65rem;
+    margin-top: .1rem;
+  }
+
+  /* Couleurs par mode */
+  .card-tt .day-card-header    { background: var(--teal); color: var(--blanc); }
+  .card-tt .status-badge       { background: var(--teal-l); color: var(--teal); }
+
+  .card-presentiel .day-card-header { background: var(--bleu); color: var(--blanc); }
+  .card-presentiel .status-badge    { background: #E8EEF8; color: var(--bleu2); }
+
+  .card-collectif .day-card-header  { background: var(--gold); color: var(--blanc); }
+  .card-collectif .status-badge     { background: var(--gold-l); color: var(--gold); }
+
+  .card-prioritaire .day-card-header{ background: var(--orange); color: var(--blanc); }
+  .card-prioritaire .status-badge   { background: var(--orange-l); color: var(--orange); }
+
+  /* ══ LÉGENDE + RÈGLES ══ */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+  .legend-box, .rules-box {
+    background: var(--blanc);
+    border-radius: 12px;
+    padding: 1.3rem 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  }
+  .box-title {
+    font-family: 'Playfair Display', serif;
+    font-size: .95rem;
+    color: var(--bleu);
+    margin-bottom: 1rem;
+    border-bottom: 1.5px solid var(--gris);
+    padding-bottom: .5rem;
+  }
+  .legend-items { display: flex; flex-direction: column; gap: .6rem; }
+  .leg-row { display: flex; align-items: center; gap: .7rem; font-size: .8rem; }
+  .leg-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink:0; }
+
+  .rules-list { display: flex; flex-direction: column; gap: .65rem; }
+  .rule-item { display: flex; gap: .65rem; font-size: .78rem; line-height: 1.5; align-items:flex-start; }
+  .rule-bullet {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--bleu);
+    color: var(--blanc);
+    font-size: .65rem;
+    font-weight: 700;
+    display: flex; align-items:center; justify-content:center;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+
+  /* ══ TABLEAU SERVICES ══ */
+  .services-table-wrap {
+    background: var(--blanc);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    margin-bottom: 2.5rem;
+  }
+  .services-table-wrap .box-title {
+    padding: 1.1rem 1.5rem .8rem;
+    border-bottom: 1.5px solid var(--gris);
+    margin-bottom: 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .78rem;
+  }
+  thead th {
+    background: var(--bleu);
+    color: var(--blanc);
+    padding: .7rem 1rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: .72rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  thead th:first-child { text-align: left; }
+  tbody tr { border-bottom: 1px solid var(--gris); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #FAFAF8; }
+  tbody td { padding: .75rem 1rem; vertical-align: middle; }
+  tbody td:first-child { font-weight: 600; color: var(--bleu); }
+  .cell-tt         { background: var(--teal-l); color: var(--teal); font-weight:700; border-radius:4px; padding:.2rem .5rem; display:inline-block; font-size:.7rem; }
+  .cell-presentiel { background: #E8EEF8; color: var(--bleu2); font-weight:700; border-radius:4px; padding:.2rem .5rem; display:inline-block; font-size:.7rem; }
+  .cell-collectif  { background: var(--gold-l); color: var(--gold); font-weight:700; border-radius:4px; padding:.2rem .5rem; display:inline-block; font-size:.7rem; }
+  td.center { text-align: center; }
+
+  /* ══ NOTE DE BAS ══ */
+  .footnote {
+    font-size: .72rem;
+    color: #999;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gris2);
+    line-height: 1.7;
+  }
+  .footnote strong { color: var(--bleu); }
+
+  /* ══ ANIM ══ */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(18px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .day-card { animation: fadeUp .4s both; }
+  .day-card:nth-child(1){ animation-delay:.05s }
+  .day-card:nth-child(2){ animation-delay:.10s }
+  .day-card:nth-child(3){ animation-delay:.15s }
+  .day-card:nth-child(4){ animation-delay:.20s }
+  .day-card:nth-child(5){ animation-delay:.25s }
+
+  @media(max-width:750px){
+    .week-grid { grid-template-columns:1fr 1fr; }
+    .bottom-row { grid-template-columns:1fr; }
+    .doc-header-left h1 { font-size:1.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ HEADER ══ -->
+  <div class="doc-header">
+    <div class="doc-header-left">
+      <div class="kicker">Document de négociation — Accord Télétravail</div>
+      <h1>Modèle de semaine<br><em>type télétravail hybride</em></h1>
+    </div>
+    <div class="doc-header-right">
+      <strong>AGPRH Assurance</strong>
+      Délégation de Saint-Denis<br>
+      21 salariés — 4 services<br>
+      Base : Préconisations 1 à 7<br>
+      Sources : ANI 24/11/2020 · CCNSA · URSSAF
+    </div>
+  </div>
+
+  <!-- ══ SELECTOR ══ -->
+  <div class="selector-bar">
+    <span>Service</span>
+    <button class="svc-btn active" onclick="setService('commercial',this)">Commercial</button>
+    <button class="svc-btn" onclick="setService('sinistres',this)">Sinistres</button>
+    <button class="svc-btn" onclick="setService('administratif',this)">Administratif</button>
+    <button class="svc-btn" onclick="setService('informatique',this)">Informatique</button>
+  </div>
+
+  <!-- ══ PILLS ══ -->
+  <div class="pills">
+    <div class="pill">
+      <div class="pill-num teal">2</div>
+      <div class="pill-label">jours TT max<br>par semaine</div>
+    </div>
+    <div class="pill">
+      <div class="pill-num bleu">3</div>
+      <div class="pill-label">jours présence<br>minimale sur site</div>
+    </div>
+    <div class="pill">
+      <div class="pill-num gold">1</div>
+      <div class="pill-label">jour collectif<br>fixe / service</div>
+    </div>
+    <div class="pill">
+      <div class="pill-num orange">26€</div>
+      <div class="pill-label">indemnité TT/mois<br>(accord collectif)</div>
+    </div>
+  </div>
+
+  <!-- ══ PLANNING ══ -->
+  <div class="planning-section">
+    <div class="section-title" id="planning-title">Planning hebdomadaire — Service Commercial</div>
+    <div class="week-grid" id="week-grid"></div>
+  </div>
+
+  <!-- ══ TABLEAU TOUS SERVICES ══ -->
+  <div class="services-table-wrap">
+    <div class="box-title">📊 Récapitulatif — Organisation type par service</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Lundi</th><th>Mardi</th><th>Mercredi</th><th>Jeudi</th><th>Vendredi</th>
+          <th>TT / sem.</th><th>Présence / sem.</th>
+        </tr>
+      </thead>
+      <tbody id="service-table"></tbody>
+    </table>
+  </div>
+
+  <!-- ══ BAS ══ -->
+  <div class="bottom-row">
+    <div class="legend-box">
+      <div class="box-title">Légende</div>
+      <div class="legend-items">
+        <div class="leg-row"><div class="leg-dot" style="background:var(--teal)"></div> <strong>Télétravail</strong> — travail à domicile ou espace de coworking déclaré</div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--bleu)"></div> <strong>Présentiel</strong> — présence obligatoire au bureau</div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--gold)"></div> <strong>Jour collectif ⭐</strong> — présence obligatoire, définie par service pour préserver la cohésion</div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--orange)"></div> <strong>TT prioritaire</strong> — accès élargi sur demande : handicap, grossesse, aidants (ANI 2020)</div>
+      </div>
+    </div>
+
+    <div class="rules-box">
+      <div class="box-title">Règles clés de l'accord (Préco. 1–7)</div>
+      <div class="rules-list">
+        <div class="rule-item"><div class="rule-bullet">1</div> Éligibilité par <strong>tâches télétravaillables</strong> + 6 mois d'ancienneté dans le poste (Préco. 1)</div>
+        <div class="rule-item"><div class="rule-bullet">2</div> Plafond de <strong>2 jours TT/semaine</strong> — dérogation jusqu'à 3j par accord tripartite salarié/manager/RH (Préco. 2)</div>
+        <div class="rule-item"><div class="rule-bullet">3</div> <strong>3 jours de présence minimale</strong> pour préserver la cohésion d'équipe (Préco. 2)</div>
+        <div class="rule-item"><div class="rule-bullet">4</div> <strong>Refus motivé par écrit</strong> obligatoire — commission de suivi paritaire 2×/an (Préco. 7)</div>
+        <div class="rule-item"><div class="rule-bullet">5</div> Indemnité forfaitaire URSSAF : <strong>26€/mois</strong> pour 2j TT avec accord de branche (Préco. 4)</div>
+        <div class="rule-item"><div class="rule-bullet">6</div> <strong>Formation obligatoire</strong> au management hybride avant mise en œuvre (Préco. 6)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">
+    <strong>AGPRH Assurance</strong> — Document préparatoire à la négociation du nouvel accord télétravail · 
+    Sources : ANI 24 novembre 2020 · CCNSA n°3265 · Accord de branche 9 novembre 2021 · Barème URSSAF 2022 · Baromètre Malakoff Humanis 2022
+  </div>
+</div>
+
+<script>
+const SERVICES = {
+  commercial: {
+    label: 'Service Commercial',
+    effectif: '~288 salariés (78%)',
+    days: [
+      { mode:'presentiel', icon:'🏢', activities:['Réunion d\'équipe hebdomadaire','Accueil clientèle physique','Revue portefeuille avec manager'] },
+      { mode:'collectif',  icon:'⭐', activities:['Jour collectif obligatoire','Atelier prospection','Formation interne si programmée'] },
+      { mode:'tt',         icon:'🏠', activities:['Traitement dossiers souscription','Relances clients (téléphone/mail)','Reporting hebdomadaire'] },
+      { mode:'presentiel', icon:'🏢', activities:['Rendez-vous clientèle','Coordination avec sinistres','Réunion commerciale ponctuelle'] },
+      { mode:'tt',         icon:'🏠', activities:['Veille marché et concurrence','Préparation semaine suivante','Travail administratif autonome'] },
+    ]
+  },
+  sinistres: {
+    label: 'Service Sinistres',
+    effectif: '~33 salariés (9%)',
+    days: [
+      { mode:'collectif',  icon:'⭐', activities:['Jour collectif obligatoire','Briefing dossiers complexes','Réunion hebdomadaire service'] },
+      { mode:'presentiel', icon:'🏢', activities:['Instruction des nouveaux dossiers','Coordination expertise terrain','Accueil assurés'] },
+      { mode:'tt',         icon:'🏠', activities:['Instruction dossiers en cours','Rédaction courriers de règlement','Analyse pièces justificatives'] },
+      { mode:'presentiel', icon:'🏢', activities:['Validation règlements avec supérieur','Contacts partenaires (experts, avocats)','Suivi dossiers contentieux'] },
+      { mode:'tt',         icon:'🏠', activities:['Clôture dossiers simples','Mise à jour base sinistres','Préparation indicateurs'] },
+    ]
+  },
+  administratif: {
+    label: 'Service Administratif',
+    effectif: '~41 salariés (11%)',
+    days: [
+      { mode:'presentiel', icon:'🏢', activities:['Réception courrier physique','Traitement urgences RH','Coordination avec direction'] },
+      { mode:'presentiel', icon:'🏢', activities:['Réunions de pilotage','Accueil interlocuteurs externes','Suivi budgétaire'] },
+      { mode:'tt',         icon:'🏠', activities:['Saisie et traitement des paies','Rédaction documents RH','Archivage numérique'] },
+      { mode:'collectif',  icon:'⭐', activities:['Jour collectif obligatoire','Points d\'avancement projets','Réunion transversale'] },
+      { mode:'tt',         icon:'🏠', activities:['Préparation reportings mensuels','Mises à jour SIRH','Travaux de fond autonomes'] },
+    ]
+  },
+  informatique: {
+    label: 'Service Informatique',
+    effectif: '~5 salariés (1%)',
+    days: [
+      { mode:'tt',         icon:'🏠', activities:['Développements & maintenance','Traitement tickets incidents','Veille technologique'] },
+      { mode:'presentiel', icon:'🏢', activities:['Interventions physiques sur parc','Support utilisateurs sur site','Réunion projet SI'] },
+      { mode:'presentiel', icon:'🏢', activities:['Déploiements planifiés','Coordination prestataires','Tests et recette'] },
+      { mode:'tt',         icon:'🏠', activities:['Développements back-office','Documentation technique','Analyses Data Science'] },
+      { mode:'collectif',  icon:'⭐', activities:['Jour collectif obligatoire','Sprint review / rétrospective','Bilan hebdomadaire SI'] },
+    ]
+  }
+};
+
+const DAY_NAMES = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+const MODES_LABEL = { tt:'Télétravail', presentiel:'Présentiel', collectif:'Jour collectif ⭐' };
+
+function renderWeek(svcKey) {
+  const svc = SERVICES[svcKey];
+  const grid = document.getElementById('week-grid');
+  document.getElementById('planning-title').textContent = `Planning hebdomadaire — ${svc.label}`;
+  grid.innerHTML = '';
+
+  svc.days.forEach((day, i) => {
+    const card = document.createElement('div');
+    card.className = `day-card card-${day.mode}`;
+    card.style.animationDelay = (i * 0.06) + 's';
+
+    const acts = day.activities.map(a => `<li>${a}</li>`).join('');
+    card.innerHTML = `
+      <div class="day-card-header">
+        <span class="day-name">${DAY_NAMES[i]}</span>
+        <span class="day-icon">${day.icon}</span>
+      </div>
+      <div class="day-card-body">
+        <span class="status-badge">${MODES_LABEL[day.mode]}</span>
+        <ul class="activities">${acts}</ul>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function renderTable() {
+  const tbody = document.getElementById('service-table');
+  tbody.innerHTML = '';
+  Object.entries(SERVICES).forEach(([key, svc]) => {
+    const tr = document.createElement('tr');
+    let ttCount = 0, preCount = 0;
+    const cells = svc.days.map(d => {
+      if (d.mode === 'tt') ttCount++;
+      else preCount++;
+      const cls = d.mode === 'collectif' ? 'collectif' : d.mode;
+      return `<td class="center"><span class="cell-${cls}">${d.mode === 'collectif' ? '⭐ Collectif' : d.mode === 'tt' ? '🏠 TT' : '🏢 Présence'}</span></td>`;
+    }).join('');
+    tr.innerHTML = `<td>${svc.label}<br><span style="font-weight:400;color:#888;font-size:.7rem">${svc.effectif}</span></td>${cells}<td class="center" style="font-weight:700;color:var(--teal)">${ttCount}j</td><td class="center" style="font-weight:700;color:var(--bleu)">${preCount}j</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function setService(key, btn) {
+  document.querySelectorAll('.svc-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWeek(key);
+}
+
+renderWeek('commercial');
+renderTable();
+</script>
+</body>
+</html>
